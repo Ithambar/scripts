@@ -1,52 +1,36 @@
 import * as fs from "fs";
-import * as path from "path";
+import klaw from "klaw";
 
 const modDir = `C://Games/Libraries/Steam/steamapps/workshop/content/236850/`;
 
-var walk = function (dir: string, done: Function) {
-	var results: Array<string> = [];
-	fs.readdir(dir, function (err, list) {
-		if (err) {
-			return done(err);
-		}
-		var pending = list.length;
-		if (!pending) {
-			return done(null, results);
-		}
-		list.forEach(function (file) {
-			file = path.resolve(dir, file);
-			fs.stat(file, function (err, stat) {
-				if (stat && stat.isDirectory()) {
-					walk(file, function (err: Error, res: Array<string>) {
-						results = results.concat(res);
-						if (!--pending) {
-							done(null, results);
-						}
-					});
-				} else {
-					results.push(file);
-					if (!--pending) {
-						done(null, results);
-					}
-				}
-			});
-		});
-	});
-};
+const result: Array<{size: number; filename: string; modname: string}> = [];
 
-walk(modDir, function (err: Error, results: Array<string>) {
-	if (err) {
-		throw err;
+if (fs.existsSync("missions/result.csv")) {
+	fs.unlinkSync("missions/result.csv");
+}
+
+fs.appendFileSync("missions/result.csv", "modname,filename,size\n");
+
+(async () => {
+	for await (const f of klaw(modDir)) {
+		const file = f as {path: string; stats: fs.Stats};
+		if (!file.path.includes("\\missions\\") || file.path.includes("\\gfx\\")) {
+			continue;
+		}
+
+		const modFilePath = file.path.match(/C:\\Games\\Libraries\\Steam\\steamapps\\workshop\\content\\236850\\\d+/)![0].concat("\\descriptor.mod");
+
+		const modname = fs
+			.readFileSync(modFilePath)
+			.toString()
+			.match(/name="(.+)"/)![1];
+		result.push({size: file.stats.size, filename: file.path.split("\\").reverse()[0], modname});
 	}
-	results = results.filter(item => {
-		return item.includes("\\missions\\") && !item.includes("\\gfx\\")
-	})
-	results.sort((a, b) => {
-		const sizeA = fs.statSync(a).size
-		const sizeB = fs.statSync(b).size
-		return sizeA < sizeB ? 1 : -1
-	})
-	console.log(results);
-});
+	result.sort((s1, s2) => {
+		return s1.size > s2.size ? -1 : 1;
+	});
 
-export { };
+	result.forEach((e) => {
+		fs.appendFileSync("missions/result.csv", `"${e.modname}","${e.filename}","${e.size}"\n`);
+	});
+})();

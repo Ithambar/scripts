@@ -4,8 +4,10 @@
 	"main": "index.js",
 	"license": "MIT",
 	"dependencies": {
-		"@types/node": "^15.0.1",
-		"tslib": "^2.2.0"
+		"@types/klaw": "^3.0.2",
+		"@types/node": "^16.6.0",
+		"klaw": "^3.0.0",
+		"tslib": "^2.3.1"
 	},
 	"scripts": {
 		"wabbajack": "ts-node wabbajack/wabbajack.ts",

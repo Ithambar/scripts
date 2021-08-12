@@ -1,0 +1,15 @@
+{
+	"compilerOptions": {
+		"module": "CommonJS",
+		"target": "ESNext",
+		"jsx": "preserve",
+		"strictFunctionTypes": true,
+		"sourceMap": true,
+		"forceConsistentCasingInFileNames": true,
+		"importHelpers": true,
+		"removeComments": true,
+		"esModuleInterop": true,
+		"strict": true
+	},
+	"exclude": ["node_modules", "**/node_modules/*"]
+}

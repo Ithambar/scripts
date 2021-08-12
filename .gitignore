@@ -116,3 +116,4 @@ dist
 .pnp.*
 /wabbajack/files/*
 /wabbajack/qwest.wabbajack
+missions/result.csv

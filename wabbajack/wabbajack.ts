@@ -9,7 +9,7 @@ async function downloadFiles() {
 	while (true) {
 		console.log(index);
 		try {
-			const response = await download("https://authored-files.wabbajack.org/QWEST%203.1.0.wabbajack_2924b175-c84f-4011-8c9f-ea1607c4b3e5/parts/" + index)
+			const response = await download("https://authored-files.wabbajack.org/QWEST%203.2.2.wabbajack_b690ae77-e053-4ab9-a506-b8d3aa89f0f3/parts/" + index)
 			response.pipe(fs.createWriteStream(filesDir + (index++).toString()))
 			continue
 		} catch (e) {
