@@ -4,13 +4,27 @@
 	"main": "index.js",
 	"license": "MIT",
 	"dependencies": {
-		"@types/klaw": "^3.0.2",
-		"@types/node": "^16.6.0",
+		"fs-extra": "^10.0.0",
 		"klaw": "^3.0.0",
+		"sqlite3": "^5.0.2",
 		"tslib": "^2.3.1"
 	},
 	"scripts": {
 		"wabbajack": "ts-node wabbajack/wabbajack.ts",
-		"missions": "ts-node missions/missions.ts"
+		"missions": "ts-node euiv/missions/missions.ts",
+		"playset": "ts-node euiv/playset/playset.ts"
+	},
+	"devDependencies": {
+		"@typescript-eslint/eslint-plugin": "^4.29.2",
+		"@typescript-eslint/parser": "^4.29.2",
+		"eslint": "^7.32.0",
+		"eslint-config-prettier": "^8.3.0",
+		"eslint-plugin-prettier": "^3.4.1",
+		"prettier": "^2.3.2",
+		"@types/fs-extra": "^9.0.12",
+		"@types/klaw": "^3.0.2",
+		"@types/node": "^16.7.1",
+		"@types/sqlite3": "^3.1.7",
+		"typescript": "^4.3.5"
 	}
 }

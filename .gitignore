@@ -117,3 +117,5 @@ dist
 /wabbajack/files/*
 /wabbajack/qwest.wabbajack
 missions/result.csv
+/euiv/playset/root
+/euiv/missions/result.csv
