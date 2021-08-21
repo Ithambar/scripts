@@ -5,11 +5,13 @@ const modDir = `C://Games/Libraries/Steam/steamapps/workshop/content/236850/`;
 
 const result: Array<{size: number; filename: string; modname: string; gameversion: string}> = [];
 
-if (fs.existsSync("missions/result.csv")) {
-	fs.unlinkSync("missions/result.csv");
+const filepath = "euiv/missions/result.csv";
+
+if (fs.existsSync(filepath)) {
+	fs.unlinkSync(filepath);
 }
 
-fs.appendFileSync("missions/result.csv", "modname,gameversion,filename,size\n");
+fs.appendFileSync(filepath, "modname,gameversion,filename,size\n");
 
 (async () => {
 	for await (const f of klaw(modDir)) {
@@ -49,6 +51,6 @@ fs.appendFileSync("missions/result.csv", "modname,gameversion,filename,size\n");
 	});
 
 	result.forEach((e) => {
-		fs.appendFileSync("missions/result.csv", `"${e.modname}","${e.gameversion}","${e.filename}","${e.size}"\n`);
+		fs.appendFileSync(filepath, `"${e.modname}","${e.gameversion}","${e.filename}","${e.size}"\n`);
 	});
 })();
