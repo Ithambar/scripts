@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import klaw from "klaw";
 
-const modDir = `C://Games/Libraries/Steam/steamapps/workshop/content/236850/`;
+const modDir = `C:/Users/Felix/Documents/dev/programming/scripts/euiv/playset/root`;
 
 const result: Array<{size: number; filename: string; modname: string; gameversion: string}> = [];
 
@@ -16,6 +16,7 @@ fs.appendFileSync(filepath, "modname,gameversion,filename,size\n");
 (async () => {
 	for await (const f of klaw(modDir)) {
 		const file = f as {path: string; stats: fs.Stats};
+
 		if (!file.path.includes("\\missions\\") || file.path.includes("\\gfx\\")) {
 			continue;
 		}
@@ -23,13 +24,13 @@ fs.appendFileSync(filepath, "modname,gameversion,filename,size\n");
 		let descriptor: string;
 		let modname = "";
 		let gameversion = "";
-		const modFilePathMatch = file.path.match(/C:\\Games\\Libraries\\Steam\\steamapps\\workshop\\content\\236850\\\d+/);
+		const modFilePathMatch = file.path.match(/C:\\Users\\Felix\\Documents\\dev\\programming\\scripts\\euiv\\playset\\root\\\d+/);
 		if (modFilePathMatch) {
 			descriptor = fs.readFileSync(modFilePathMatch[0].concat("\\descriptor.mod")).toString();
 			const versionMatch = descriptor.match(/supported_version="(.+)"/);
 			if (versionMatch) {
 				gameversion = versionMatch[1];
-				if (!gameversion.startsWith("1.31")) {
+				if (!gameversion.startsWith("1.32")) {
 					continue;
 				}
 			} else {
